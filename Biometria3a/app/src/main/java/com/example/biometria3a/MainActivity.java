@@ -71,8 +71,8 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView textViewDispositivos; // Declarar el TextView
     private StringBuilder dispositivosEncontrados; // Para almacenar los dispositivos encontrados
-     double valorMinor;
-     double valorMajor;
+    double valorMinor;
+    double valorMajor;
 
 
     private static final int CODIGO_PETICION_PERMISOS = 11223344;
@@ -83,12 +83,6 @@ public class MainActivity extends AppCompatActivity {
     private ScanCallback callbackDelEscaneo;
     // --------------------------------------------------------------
     // --------------------------------------------------------------
-
-
-
-
-
-
 
 
     private void buscarTodosLosDispositivosBTLE() {
@@ -109,8 +103,6 @@ public class MainActivity extends AppCompatActivity {
             public void onBatchScanResults(List<ScanResult> results) {
                 super.onBatchScanResults(results);
                 Log.d(ETIQUETA_LOG, " buscarTodosLosDispositivosBTL(): onBatchScanResults() ");
-
-
 
 
             }
@@ -138,7 +130,6 @@ public class MainActivity extends AppCompatActivity {
     } // ()
 
 
-
     // --------------------------------------------------------------
     // --------------------------------------------------------------
 
@@ -163,17 +154,8 @@ public class MainActivity extends AppCompatActivity {
         }
         Log.d(ETIQUETA_LOG, " nombre = " + bluetoothDevice.getName());
         Log.d(ETIQUETA_LOG, " toString = " + bluetoothDevice.toString());
-
-        /*
-        ParcelUuid[] puuids = bluetoothDevice.getUuids();
-        if ( puuids.length >= 1 ) {
-            //Log.d(ETIQUETA_LOG, " uuid = " + puuids[0].getUuid());
-           // Log.d(ETIQUETA_LOG, " uuid = " + puuids[0].toString());
-        }*/
-
         Log.d(ETIQUETA_LOG, " dirección = " + bluetoothDevice.getAddress());
         Log.d(ETIQUETA_LOG, " rssi = " + rssi);
-
         Log.d(ETIQUETA_LOG, " bytes = " + new String(bytes));
         Log.d(ETIQUETA_LOG, " bytes (" + bytes.length + ") = " + Utilidades.bytesToHexString(bytes));
 
@@ -201,16 +183,8 @@ public class MainActivity extends AppCompatActivity {
     } // ()
 
 
-
-
     // --------------------------------------------------------------
     // --------------------------------------------------------------
-    private double getMedicionsBeacon (ScanResult resultado) {
-        byte[] bytes = resultado.getScanRecord().getBytes();
-        TramaIBeacon tib = new TramaIBeacon(bytes);
-        return Utilidades.bytesToInt(tib.getMinor());
-    }
-
     private String obtenerInformacionDispositivoBTLE(ScanResult resultado) {
         BluetoothDevice bluetoothDevice = resultado.getDevice();
         byte[] bytes = resultado.getScanRecord().getBytes();
@@ -240,18 +214,11 @@ public class MainActivity extends AppCompatActivity {
     // --------------------------------------------------------------
 
     private void buscarEsteDispositivoBTLE300(final String dispositivoBuscado) {
-        //Log.d(ETIQUETA_LOG, " buscarEsteDispositivoBTLE(): empieza ");
-
-        //Log.d(ETIQUETA_LOG, "  buscarEsteDispositivoBTLE(): instalamos scan callback ");
-
-        // super.onScanResult(ScanSettings.SCAN_MODE_LOW_LATENCY, result); para ahorro de energía
 
         this.callbackDelEscaneo = new ScanCallback() {
             @Override
             public void onScanResult(int callbackType, ScanResult resultado) {
                 super.onScanResult(callbackType, resultado);
-                //Log.d(ETIQUETA_LOG, "  buscarEsteDispositivoBTLE(): onScanResult() ");
-
                 if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
                     return;
                 }
@@ -275,12 +242,7 @@ public class MainActivity extends AppCompatActivity {
                     });
 
 
-
-
-            }
-
-
-                else {
+                } else {
                     //Log.d(ETIQUETA_LOG, "  buscarEsteDispositivoBTLE(): onScanResult(): no es el dispositivo buscado ");
                 }
             }
@@ -301,10 +263,6 @@ public class MainActivity extends AppCompatActivity {
         };
         ScanFilter sf = new ScanFilter.Builder().setDeviceName(dispositivoBuscado).build();
 
-        //Log.d(ETIQUETA_LOG, "  buscarEsteDispositivoBTLE(): empezamos a escanear buscando: " + dispositivoBuscado);
-        //Log.d(ETIQUETA_LOG, "  buscarEsteDispositivoBTLE(): empezamos a escanear buscando: " + dispositivoBuscado
-        //      + " -> " + Utilidades.stringToUUID( dispositivoBuscado ) );
-
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
             //Log.d(ETIQUETA_LOG, "  buscarEsteDispositivoBTLE(): NO tengo permisos para escanear ");
             ActivityCompat.requestPermissions(
@@ -314,7 +272,6 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         this.elEscanner.startScan(this.callbackDelEscaneo);
-
 
 
         // -----------------------Obtener el nombre del dispositivo---------------------------------
@@ -335,7 +292,6 @@ public class MainActivity extends AppCompatActivity {
 
                 TextView tvBluetoothName = findViewById(R.id.nuestrodisp);
                 tvBluetoothName.setText("Nombre del dispositivo: " + finalDeviceName);
-
 
 
                 TextView tvBluetoothValores = findViewById(R.id.valoresSensor);
@@ -349,289 +305,6 @@ public class MainActivity extends AppCompatActivity {
 
     // --------------------------------------------------------------
     // --------------------------------------------------------------
-
-
-
-
-        private void buscarEsteDispositivoBTLE(final String dispositivoBuscado) {
-        Log.d(ETIQUETA_LOG, " buscarEsteDispositivoBTLE(): empieza ");
-
-        Log.d(ETIQUETA_LOG, "  buscarEsteDispositivoBTLE(): instalamos scan callback ");
-
-
-        // super.onScanResult(ScanSettings.SCAN_MODE_LOW_LATENCY, result); para ahorro de energía
-
-
-        this.callbackDelEscaneo = new ScanCallback() {
-            @Override
-            public void onScanResult(int callbackType, ScanResult resultado) {
-                super.onScanResult(callbackType, resultado);
-                Log.d(ETIQUETA_LOG, "  buscarEsteDispositivoBTLE(): onScanResult() ");
-                mostrarInformacionDispositivoBTLE(resultado);
-                getMedicionsBeacon(resultado);
-
-            }
-
-            @Override
-            public void onBatchScanResults(List<ScanResult> results) {
-                super.onBatchScanResults(results);
-                Log.d(ETIQUETA_LOG, "  buscarEsteDispositivoBTLE(): onBatchScanResults() ");
-
-            }
-
-            @Override
-            public void onScanFailed(int errorCode) {
-                super.onScanFailed(errorCode);
-                Log.d(ETIQUETA_LOG, "  buscarEsteDispositivoBTLE(): onScanFailed() ");
-
-            }
-        };
-
-        ScanFilter sf = new ScanFilter.Builder().setDeviceName(dispositivoBuscado).build();
-
-        Log.d(ETIQUETA_LOG, "  buscarEsteDispositivoBTLE(): empezamos a escanear buscando: " + dispositivoBuscado);
-        //Log.d(ETIQUETA_LOG, "  buscarEsteDispositivoBTLE(): empezamos a escanear buscando: " + dispositivoBuscado
-        //      + " -> " + Utilidades.stringToUUID( dispositivoBuscado ) );
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        this.elEscanner.startScan(this.callbackDelEscaneo);
-
-
-        String deviceName = dispositivoBuscado;
-        if (deviceName == null) {
-            deviceName = "Nombre no disponible";  // Si no tiene nombre, mostrar un mensaje por defecto
-        }
-//
-        // Obtener el TextView por su ID y actualizar el texto en el hilo principal
-        final String finalDeviceName = deviceName;  // Necesario para acceder dentro de runOnUiThread
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                TextView tvBluetoothName = findViewById(R.id.nuestrodisp);
-                tvBluetoothName.setText("Nombre del dispositivo: " + finalDeviceName);
-                TextView tvBluetoothValores = findViewById(R.id.valoresSensor);
-                tvBluetoothValores.setText("Valores del sensor: Animal");
-
-            }
-        });
-    }
-
-    // ()
-    /*
-    private void mostrarInformacionDispositivoBTLE(ScanResult resultado) {
-
-        // Obtener el servicio de ubicación
-        LocationManager locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        @SuppressLint("MissingPermission") Location loc = locManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        // Obtener el dispositivo Bluetooth y los datos del escaneo
-        BluetoothDevice bluetoothDevice = resultado.getDevice();
-        byte[] bytes = resultado.getScanRecord().getBytes();
-        int rssi = resultado.getRssi();
-
-
-
-        // Comprobar permisos para Bluetooth
-
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-
-            Log.d(ETIQUETA_LOG, " ****************************************************");
-            Log.d(ETIQUETA_LOG, " ****** DISPOSITIVO DETECTADO BTLE ****************** ");
-            Log.d(ETIQUETA_LOG, " ****************************************************");
-
-            return;
-        }
-        // Log.d(ETIQUETA_LOG2, " nombre = " + bluetoothDevice.getName());
-        // Buscar el TextView por ID
-
-        // -----------------------Obtener el nombre del dispositivo---------------------------------
-        String deviceName = bluetoothDevice.getName();
-        if (deviceName == null) {
-            deviceName = "Nombre no disponible";  // Si no tiene nombre, mostrar un mensaje por defecto
-        }
-
-
-        // Mostrar en el Log para depuración
-        Log.d(ETIQUETA_LOG2, ".......Nombre del dispositivo: " + deviceName);
-
-
-        // Obtener el TextView por su ID y actualizar el texto en el hilo principal
-        final String finalDeviceName = deviceName;  // Necesario para acceder dentro de runOnUiThread
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                TextView tvBluetoothName = findViewById(R.id.nuestrodisp);
-                if (tvBluetoothName != null) {
-                    tvBluetoothName.setText("Nombre del dispositivo: " + finalDeviceName);
-                } else {
-                    Log.e(ETIQUETA_LOG2, "TextView 'nuestrodisp' no encontrado.");
-                    tvBluetoothName.setText("Dispositivo no encontrado :( ");
-                }
-            }
-        });
-
-        // -------------------------------------------------------------------------------
-
-
-        // Mostrar en el Log para depuración
-        //      Log.d(ETIQUETA_LOG2, "'''''''''Nombre del dispositivo: " + deviceName);
-
-        // Obtener el TextView por su ID
-        TextView tvBluetoothName = findViewById(R.id.dispositivoBtle);
-        Log.d(ETIQUETA_LOG2, " toString = " + bluetoothDevice.toString());
-
-        */
-        /*
-        ParcelUuid[] puuids = bluetoothDevice.getUuids();
-        if ( puuids.length >= 1 ) {
-            //Log.d(ETIQUETA_LOG, " uuid = " + puuids[0].getUuid());
-           // Log.d(ETIQUETA_LOG, " uuid = " + puuids[0].toString());
-        }*/
-/*
-        Log.d(ETIQUETA_LOG2, " dirección = " + bluetoothDevice.getAddress());
-        Log.d(ETIQUETA_LOG2, " rssi = " + rssi);
-
-        Log.d(ETIQUETA_LOG2, " bytes = " + new String(bytes));
-        Log.d(ETIQUETA_LOG2, " bytes (" + bytes.length + ") = " + Utilidades.bytesToHexString(bytes));
-
-        TramaIBeacon tib = new TramaIBeacon(bytes);
-
-        Log.d(ETIQUETA_LOG2, " ----------------------------------------------------");
-        Log.d(ETIQUETA_LOG2, " prefijo  = " + Utilidades.bytesToHexString(tib.getPrefijo()));
-        Log.d(ETIQUETA_LOG2, "          advFlags = " + Utilidades.bytesToHexString(tib.getAdvFlags()));
-        Log.d(ETIQUETA_LOG2, "          advHeader = " + Utilidades.bytesToHexString(tib.getAdvHeader()));
-        Log.d(ETIQUETA_LOG2, "          companyID = " + Utilidades.bytesToHexString(tib.getCompanyID()));
-        Log.d(ETIQUETA_LOG2, "          iBeacon type = " + Integer.toHexString(tib.getiBeaconType()));
-        Log.d(ETIQUETA_LOG2, "          iBeacon length 0x = " + Integer.toHexString(tib.getiBeaconLength()) + " ( "
-                + tib.getiBeaconLength() + " ) ");
-        Log.d(ETIQUETA_LOG, " uuid  = " + Utilidades.bytesToHexString(tib.getUUID()));
-        Log.d(ETIQUETA_LOG2, " uuid  = " + Utilidades.bytesToString(tib.getUUID()));
-        Log.d(ETIQUETA_LOG2, " major  = " + Utilidades.bytesToHexString(tib.getMajor()) + "( "
-                + Utilidades.bytesToInt(tib.getMajor()) + " ) ");
-        Log.d(ETIQUETA_LOG2, " minor  = " + Utilidades.bytesToHexString(tib.getMinor()) + "( "
-                + Utilidades.bytesToInt(tib.getMinor()) + " ) ");
-        Log.d(ETIQUETA_LOG2, " txPower  = " + Integer.toHexString(tib.getTxPower()) + " ( " + tib.getTxPower() + " )");
-        Log.d(ETIQUETA_LOG2, " ****************************************************");
-        //medida=new Medidas(Utilidades.bytesToInt(tib.getMajor()),Utilidades.bytesToInt(tib.getMinor()),9,99);
-        medida.setMedicion(Utilidades.bytesToInt(tib.getMajor()));
-        medida.setTipoSensor(Utilidades.bytesToInt(tib.getMinor()));
-        medida.setLatitud(loc.getLatitude());
-        medida.setLongitud(loc.getLongitude());
-
-        */
-
-        /*
-        // Extraer valores del sensor (como Major, Minor, etc.)
-        TramaIBeacon tib = new TramaIBeacon(bytes);  // Assuming this is a class that parses the iBeacon data
-        String uuid = Utilidades.bytesToString(tib.getUUID());
-        int major = Utilidades.bytesToInt(tib.getMajor());
-        int minor = Utilidades.bytesToInt(tib.getMinor());
-        int txPower = tib.getTxPower();
-
-        // Construir la cadena de texto que mostrará los valores del sensor
-        final String sensorData = "UUID: " + uuid + "\n" +
-                "Major: " + major + "\n" +
-                "Minor: " + minor + "\n" +
-                "RSSI: " + rssi + "\n" +
-                "TX Power: " + txPower;
-
-        // Actualizar el TextView con el nombre del dispositivo en el hilo principal
-        //final String finalDeviceName = deviceName;
-        Actualizar los valores del sensor en el TextView
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                TextView tvValoresSensor = findViewById(R.id.valoresSensor);
-                if (tvValoresSensor != null) {
-                    tvValoresSensor.setText(sensorData);
-                } else {
-                    Log.e(ETIQUETA_LOG2, "TextView 'valoresSensor' no encontrado.");
-                }
-            }
-        });
-
-        // Registrar los datos en el LogCat
-        Log.d(ETIQUETA_LOG2, "Datos del iBeacon:");
-        Log.d(ETIQUETA_LOG2, "UUID: " + uuid);
-        Log.d(ETIQUETA_LOG2, "Major: " + major);
-        Log.d(ETIQUETA_LOG2, "Minor: " + minor);
-        Log.d(ETIQUETA_LOG2, "TX Power: " + txPower);
-
-
-    } // ()
-
-        */
-    // --------------------------------------------------------------
-    // --------------------------------------------------------------
-    private void buscarEsteDispositivoBTLE2(final String dispositivoBuscado) {
-        Log.d(ETIQUETA_LOG, " buscarEsteDispositivoBTLE(): empieza ");
-
-        Log.d(ETIQUETA_LOG, "  buscarEsteDispositivoBTLE(): instalamos scan callback ");
-
-
-        // super.onScanResult(ScanSettings.SCAN_MODE_LOW_LATENCY, result); para ahorro de energía
-
-        this.callbackDelEscaneo = new ScanCallback() {
-            @Override
-            public void onScanResult(int callbackType, ScanResult resultado) {
-                super.onScanResult(callbackType, resultado);
-                Log.d(ETIQUETA_LOG, "onScanResult(): Dispositivo detectado");
-                mostrarInformacionDispositivoBTLE(resultado);
-                Log.d(ETIQUETA_LOG, "'''''''''''''''''''''''''''''''mediciones'''''''''''''''''''''''''''''''''''");
-                getMedicionsBeacon(resultado);
-            }
-
-            @Override
-            public void onBatchScanResults(List<ScanResult> results) {
-                super.onBatchScanResults(results);
-                Log.d(ETIQUETA_LOG, "onBatchScanResults(): Resultados detectados: " + results.size());
-            }
-
-            @Override
-            public void onScanFailed(int errorCode) {
-                super.onScanFailed(errorCode);
-                Log.e(ETIQUETA_LOG, "onScanFailed(): Error en el escaneo, código de error: " + errorCode);
-            }
-        };
-
-
-        ScanFilter sf = new ScanFilter.Builder().setDeviceName(dispositivoBuscado).build();
-
-        Log.d(ETIQUETA_LOG, "  buscarEsteDispositivoBTLE(): empezamos a escanear buscando: " + dispositivoBuscado);
-
-        // -----------------------Obtener el nombre del dispositivo---------------------------------
-        // Obtener el nombre del dispositivo Bluetooth
-        String deviceName = dispositivoBuscado;
-        if (deviceName == null) {
-            deviceName = "Nombre no disponible";  // Si no tiene nombre, mostrar un mensaje por defecto
-        }
-//
-        // Mostrar en el Log para depuración
-        Log.d(ETIQUETA_LOG2, "....Nombre del dispositivo: " + deviceName);
-
-
-
-
-        // Obtener el TextView por su ID y actualizar el texto en el hilo principal
-        final String finalDeviceName = deviceName;  // Necesario para acceder dentro de runOnUiThread
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                TextView tvBluetoothName = findViewById(R.id.nuestrodisp);
-                tvBluetoothName.setText("Nombre del dispositivo: " + finalDeviceName);
-            }
-        });
-
-
-
-// -------------------------------------------------------------------------------
-
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        this.elEscanner.startScan(this.callbackDelEscaneo);
-    } // ()
 
     // --------------------------------------------------------------
     // --------------------------------------------------------------
@@ -667,9 +340,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(ETIQUETA_LOG, " boton nuestro dispositivo BTLE Pulsado");
         //this.buscarEsteDispositivoBTLE( Utilidades.stringToUUID( "EPSG-GTI-PROY-3A" ) );
 
-        this.buscarEsteDispositivoBTLE300( "ESTO-ES-UN-TEXTO" );
-
-
+        this.buscarEsteDispositivoBTLE300("ESTO-ES-UN-TEXTO");
 
 
     } // ()
@@ -734,9 +405,6 @@ public class MainActivity extends AppCompatActivity {
     } // ()
 
 
-
-
-
     // --------------------------------------------------------------
     // --------------------------------------------------------------
 
@@ -750,8 +418,7 @@ public class MainActivity extends AppCompatActivity {
         dispositivosEncontrados = new StringBuilder();
 
 
-
-        mandarPost=findViewById(R.id.mandarPost);
+        mandarPost = findViewById(R.id.mandarPost);
         mandarPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -785,36 +452,40 @@ public class MainActivity extends AppCompatActivity {
     // --------------------------------------------------------------
 
 
-
-
-
     //-------------------------enviar el post --------------------
     // Updated method to send POST request
     public void boton_enviar_pulsado_client(View quien) {
         Log.d("clienterestandroid", "boton_enviar_pulsado_client");
 
-        // LocationManager locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        //  @SuppressLint("MissingPermission") Location loc = locManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            // LocationManager locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            //  @SuppressLint("MissingPermission") Location loc = locManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            String urlDestino = "http://192.168.18.157:8080/mediciones";
 
-        // URL de destino
-        // URL de destino correcta para enviar la medición
-
-        // Crear un objeto JSON e introducir valores
-        JSONObject postData = new JSONObject();
-        try {
+            // Crear un objeto JSON e introducir valores
+            JSONObject postData = new JSONObject();
+            try {
             /*postData.put("Medicion", medida.getMedicion());
             postData.put("TipoSensor", medida.getTipoSensor());
             postData.put("Latitud", medida.getLatitud());
             postData.put("Longitud", medida.getLongitud());
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Log.d("clienterestandroid", "MAAAAAAAAAAAAAAAAAAAAAAAAAAL");
-            return; // Exit if JSON creation fails
-        }
+            */
+                postData.put("hora", "23:00");
+                postData.put("lugar", "Haskovo");
+                postData.put("id_sensor", 101);
+                postData.put("valorGas", valorMinor);
+                postData.put("valorTemperatura", 35.0);
 
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Log.d("clienterestandroid", "MAAAAAAAAAAAAAAAAAAAAAAAAAAL");
+                return;// Exit if JSON creation fails
+            }
         // Execute POST request in an AsyncTask
         new PostDataTask(urlDestino, postData).execute();
     }
+
+
 
     private class PostDataTask extends AsyncTask<Void, Void, String> {
         private String urlString;
@@ -893,7 +564,7 @@ public class MainActivity extends AppCompatActivity {
 
 } // class
 
-                // Read response from input stream
+              /*  // Read response from input stream
                 try (BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "utf-8"))) {
                     String responseLine;
                     while ((responseLine = br.readLine()) != null) {
