@@ -1,6 +1,6 @@
-# S0_Android_Biometria_Y_Medio_Ambiente
+# Sprint0 - Android Studio 
 
-## -----------------------------------------------------------------------------------------------------------------------------------
+## ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## Descripcion
 
@@ -24,7 +24,12 @@ Este proyecto es una aplicación Android que escanea dispositivos Bluetooth Low 
 - La información de las mediciones se mostrará en la pantalla.
 - Para enviar datos al servidor, presiona el botón Enviar Datos. Los datos se enviarán a la URL especificada en el código.
 
-## --------------------------------------------------------------------------------------------------------------------------------------
+## ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+## Licencia
+Este proyecto está bajo la Licencia MIT. Consulta el archivo LICENSE para más detalles
+
+## ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## Clases 
 
@@ -82,37 +87,14 @@ public void boton_enviar_pulsado_client(View quien) {
 }
 
 
-## --------------------------------------------------------------------------------------------------------------------------------------
+## ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 ### FAQs
 
-1. ¿Qué es Bluetooth Low Energy (BLE) y cómo se utiliza en este proyecto?
-Bluetooth Low Energy (BLE) es una tecnología de comunicación inalámbrica diseñada para aplicaciones que requieren bajo consumo de energía y transmisión de datos a corto alcance. En este proyecto, BLE se utiliza para escanear dispositivos iBeacon cercanos, recopilar datos de sensores y enviar información a un servidor a través de la aplicación Android.
-
-2. ¿Qué dispositivos son compatibles con esta aplicación?
-La aplicación está diseñada para funcionar con cualquier dispositivo que emita señales BLE compatibles con el estándar iBeacon. 
-
-
-3. ¿Que es una UUID ?
+### ¿Que es una UUID ?
 UUID (Universally Unique Identifier) es un identificador estándar utilizado en sistemas de computación para identificar de manera única información sin necesidad de un sistema centralizado.La probabilidad de que dos UUID generados de forma independiente sean idénticos es extremadamente baja, lo que hace que sean ideales para usar como identificadores únicos en sistemas distribuidos.
 
-4. ¿Cómo puedo personalizar el UUID del iBeacon en el proyecto Arduino?
-Puedes modificar el UUID del iBeacon editando la variable beaconUUID en la clase Publicador. Asegúrate de que el UUID tenga 16 bytes y siga el formato adecuado para iBeacons.
-
-5. ¿Como se genera una UUID ?
+### ¿Como se genera una UUID ?
  Un UUID se representa generalmente como una cadena de 32 dígitos hexadecimales, divididos en cinco grupos separados por guiones.
 
-6. ¿Qué permisos necesita la aplicación Android para funcionar correctamente?
-La aplicación requiere permisos de Bluetooth y ubicación para escanear dispositivos BLE. Asegúrate de conceder estos permisos cuando la aplicación los solicite para garantizar su correcto funcionamiento.
-
-7. ¿Cómo puedo enviar datos a un servidor diferente al especificado en el código?
-Para cambiar la URL del servidor al que se envían los datos, edita la variable urlDestino en la función boton_enviar_pulsado_client dentro de la clase MainActivity. Asegúrate de que el servidor esté configurado para recibir y procesar las solicitudes POST adecuadamente.
-
-8. ¿Qué hago si la aplicación no puede enviar datos al servidor?
-Si la aplicación no puede enviar datos al servidor, verifica lo siguiente:
-
-Asegúrate de que la URL del servidor en boton_enviar_pulsado_client sea correcta y que el servidor esté en funcionamiento.
-Revisa la conexión a Internet en el dispositivo Android.
-Verifica que el servidor esté configurado para aceptar solicitudes POST desde la aplicación.
-Consulta los logs de la aplicación para identificar posibles errores en la solicitud HTTP.
-
-## --------------------------------------------------------------------------------------------------------------------------------------
+## ----------------------------------------------------------------------------------------------------------------------------------------------------------------------

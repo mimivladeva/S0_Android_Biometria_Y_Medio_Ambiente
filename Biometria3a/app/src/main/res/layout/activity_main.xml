@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FDC4DD"
+    android:orientation="vertical"
+    android:rotation="0"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/botonBuscarDispositivosBTLE"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#FF5aa4"
+        android:onClick="botonBuscarDispositivosBTLEPulsado"
+        android:text="Buscar Dispositivos BTLE nou 4" />
+
+    <Button
+        android:id="@+id/botonDetenerBusquedaDispositivosBTLE"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#FF5aa4"
+        android:onClick="botonDetenerBusquedaDispositivosBTLEPulsado"
+        android:text="Detener búsaqueda Dispositivos BTLE" />
+
+    <Button
+        android:id="@+id/botonBuscarNuestroDispositivoBTLE"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#FF5aa4"
+        android:onClick="botonBuscarNuestroDispositivoBTLEPulsado"
+        android:text="Buscar nuestro dispositivo  BTLE" />
+
+    <Button
+        android:id="@+id/mandarPost"
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+        android:backgroundTint="#FF5aa4"
+        android:text="Enviar datos"
+        android:textColorLink="#DB0707" />
+
+
+    <TextView
+        android:id="@+id/dispositivoBtle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="#690D7C" />
+
+    <TextView
+        android:id="@+id/nuestrodisp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#F01515" />
+
+    <TextView
+        android:id="@+id/valoresSensor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="Valores del sensor"
+        android:textColor="#00A2F0"
+        android:textSize="20dp" />
+
+
+</android.widget.LinearLayout>
