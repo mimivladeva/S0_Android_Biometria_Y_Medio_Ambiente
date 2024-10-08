@@ -2,18 +2,13 @@ package com.example.biometria3a;
 
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothManager;
 import android.bluetooth.le.BluetoothLeScanner;
 import android.bluetooth.le.ScanCallback;
 import android.bluetooth.le.ScanFilter;
 import android.bluetooth.le.ScanResult;
-import android.content.Context;
 import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,18 +16,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -44,12 +32,6 @@ import java.util.List;
 
 // ------------------------------------------------------------------
 // ------------------------------------------------------------------
-
-
-
-import java.util.List;
-
-
 
 // ------------------------------------------------------------------
 // ------------------------------------------------------------------
@@ -340,7 +322,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(ETIQUETA_LOG, " boton nuestro dispositivo BTLE Pulsado");
         //this.buscarEsteDispositivoBTLE( Utilidades.stringToUUID( "EPSG-GTI-PROY-3A" ) );
 
-        this.buscarEsteDispositivoBTLE300("ESTO-ES-UN-TEXTO");
+        this.buscarEsteDispositivoBTLE300("MIMI-ES-UN-TEXTO");
 
 
     } // ()
@@ -473,6 +455,7 @@ public class MainActivity extends AppCompatActivity {
                 postData.put("lugar", "Haskovo");
                 postData.put("id_sensor", 101);
                 postData.put("valorGas", valorMinor);
+              //  postData.put("valorGas", 45.7);
                 postData.put("valorTemperatura", 35.0);
 
 
@@ -564,53 +547,6 @@ public class MainActivity extends AppCompatActivity {
 
 } // class
 
-              /*  // Read response from input stream
-                try (BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "utf-8"))) {
-                    String responseLine;
-                    while ((responseLine = br.readLine()) != null) {
-                        response.append(responseLine.trim());
-                    }
-                }
-            } catch (Exception e) {
-                Log.d("clienterestandroid", "Error: " + e.getMessage());
-                return null;
-            } finally {
-                if (urlConnection != null) {
-                    urlConnection.disconnect();
-                }
-            }
-            return response.toString();
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            if (result != null) {
-                try {
-                    JSONObject response = new JSONObject(result);
-                    String success = response.getString("success");
-                    String message = response.getString("message");
-
-                    if ("1".equals(success)) {
-                        Log.d(ETIQUETA_LOG, "Datos guardados correctamente: " + message);
-                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-                    } else {
-                        Log.d(ETIQUETA_LOG, "Datos guardados incorrectamente: " + message);
-                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                Log.d(ETIQUETA_LOG, "Datos guardados incorrectamente");
-            }
-        }
-    }
-}
-
- */
-
-
- // class
 
 
 // --------------------------------------------------------------
